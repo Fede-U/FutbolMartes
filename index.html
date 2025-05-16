@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>5v5 Soccer Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>5v5 Soccer Tracker</h1>
+
+  <!-- Player List & Categories -->
+  <section id="player-list">
+    <h2>Players & Categories</h2>
+    <div id="players-container"></div>
+  </section>
+
+  <!-- Player Rankings -->
+  <section id="rankings">
+    <h2>Rankings</h2>
+    <div id="ranking-container"></div>
+  </section>
+
+  <!-- Match Input Form -->
+  <section id="match-form">
+    <h2>Enter Match Result</h2>
+
+    <form id="matchInput">
+      <div class="teams">
+        <div>
+          <h3>Team A</h3>
+          <div id="teamA"></div>
+        </div>
+        <div>
+          <h3>Team B</h3>
+          <div id="teamB"></div>
+        </div>
+      </div>
+
+      <label for="winner">Winning Team:</label>
+      <select id="winner" required>
+        <option value="">Select Winner</option>
+        <option value="A">Team A</option>
+        <option value="B">Team B</option>
+      </select>
+
+      <button type="submit">Submit Match</button>
+    </form>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
