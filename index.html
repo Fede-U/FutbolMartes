@@ -2,22 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>5v5 Soccer Tracker</title>
+  <title>Fútbol Martes</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>5v5 Soccer Tracker</h1>
-
-  
-  <!-- Add this inside the #player-list section, before #players-container -->
+  <h1>Fútbol Martes</h1>
 
   
   <!-- Player List & Categories -->
   <section id="player-list">
-    <h2>Players & Categories</h2>
+    <h2>Listado de jugadores</h2>
       <form id="addPlayerForm">
         <input type="text" id="newPlayerName" placeholder="Player name" required>
-        <button type="submit">Add Player</button>
+        <button type="submit">Agregar Jugador</button>
       </form>
     <div id="players-container"></div>
   </section>
@@ -30,7 +27,7 @@
 
   <!-- Match Input Form -->
   <section id="match-form">
-    <h2>Enter Match Result</h2>
+    <h2>Resultados Partido</h2>
 
     <form id="matchInput">
       <div class="teams">
@@ -44,14 +41,14 @@
         </div>
       </div>
 
-      <label for="winner">Winning Team:</label>
+      <label for="winner">Equipo ganador:</label>
       <select id="winner" required>
-        <option value="">Select Winner</option>
+        <option value="">Elegir ganadorr</option>
         <option value="A">Team A</option>
         <option value="B">Team B</option>
       </select>
 
-      <button type="submit">Submit Match</button>
+      <button type="submit">Guardar resultado</button>
     </form>
   </section>
 
