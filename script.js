@@ -11,6 +11,8 @@ function loadData() {
   renderPlayers();
   renderRankings();
   populateTeamSelectors();
+  renderMatchHistory();
+
 }
 
 function saveData() {
@@ -55,7 +57,12 @@ document.getElementById("matchInput").addEventListener("submit", function (e) {
     return;
   }
 
-  matches.push({ teamA, teamB, winner });
+  matches.push({ 
+  teamA,
+  teamB,
+  winner,
+  date: new Date().toLocaleString()  
+  });
   updatePlayerStats(teamA, teamB, winner);
   saveData();
   renderPlayers();
@@ -154,6 +161,56 @@ function populateTeamSelectors() {
 
     return container;
   };
+
+  ///Historial de partidos
+  function renderMatchHistory() {
+  const container = document.getElementById("history-container");
+  container.innerHTML = "";
+
+  matches.forEach((match, index) => {
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <strong>${match.date}</strong> — Winner: Team ${match.winner}
+      <button data-index="${index}" class="details-button">View Details</button>
+    `;
+    container.appendChild(div);
+  });
+
+  // Attach event listeners
+  document.querySelectorAll(".details-button").forEach(button => {
+    button.addEventListener("click", function () {
+      const matchIndex = this.dataset.index;
+      showMatchDetails(matchIndex);
+    });
+  });
+}
+
+  function showMatchDetails(index) {
+  const match = matches[index];
+  const modal = document.getElementById("match-modal");
+  const content = document.getElementById("modal-content");
+
+  content.innerHTML = `
+    <p><strong>Team A:</strong> ${match.teamA.join(", ")}</p>
+    <p><strong>Team B:</strong> ${match.teamB.join(", ")}</p>
+    <p><strong>Winner:</strong> Team ${match.winner}</p>
+  `;
+
+  modal.classList.remove("hidden");
+}
+
+document.querySelector(".close-button").addEventListener("click", () => {
+  document.getElementById("match-modal").classList.add("hidden");
+});
+
+window.addEventListener("click", (e) => {
+  const modal = document.getElementById("match-modal");
+  if (e.target === modal) {
+    modal.classList.add("hidden");
+  }
+});
+
+
 
   teamA.appendChild(createSelects("teamA"));
   teamB.appendChild(createSelects("teamB"));
