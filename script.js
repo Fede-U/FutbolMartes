@@ -41,6 +41,7 @@ document.getElementById("addPlayerForm").addEventListener("submit", function (e)
   populateTeamSelectors();
 });
 
+
   // Populate team selectors
 function populateTeamSelectors() {
   const teamA = document.getElementById("teamA");
@@ -111,12 +112,60 @@ document.getElementById("matchInput").addEventListener("submit", function (e) {
   populateTeamSelectors();
 });
 
-// Helpers (to implement next)
-function getSelectedPlayers(teamId) {}
-function updatePlayerStats(teamA, teamB, winner) {}
-function renderPlayers() {}
-function renderRankings() {}
-function populateTeamSelectors() {}
+
+// Helpers
+
+function renderPlayers() {
+  const container = document.getElementById("players-container");
+  container.innerHTML = "";
+
+  for (const name in players) {
+    const { wins, games, winPct, category } = getPlayerStats(name);
+    const div = document.createElement("div");
+    div.textContent = `${name} — ${wins}W / ${games}G (${winPct}%) — Category ${category}`;
+    container.appendChild(div);
+  }
+}
+
+function updatePlayerStats(teamA, teamB, winner) {
+  // Count games for everyone
+  [...teamA, ...teamB].forEach(player => {
+    players[player].games += 1;
+  });
+
+  // Count wins
+  const winningTeam = winner === "A" ? teamA : teamB;
+  winningTeam.forEach(player => {
+    players[player].wins += 1;
+  });
+}
+
+function getPlayerStats(name) {
+  const { wins, games } = players[name];
+  const winPct = games === 0 ? 0 : Math.round((wins / games) * 100);
+  let category = "C";
+  if (winPct > 70) category = "A";
+  else if (winPct > 30) category = "B";
+  return { wins, games, winPct, category };
+}
+
+function renderRankings() {
+  const container = document.getElementById("ranking-container");
+  container.innerHTML = "";
+
+  const ranked = Object.keys(players).map(name => {
+    return { name, ...getPlayerStats(name) };
+  });
+
+  ranked.sort((a, b) => b.winPct - a.winPct);
+
+  ranked.forEach(player => {
+    const div = document.createElement("div");
+    div.textContent = `${player.name}: ${player.winPct}% (${player.wins}/${player.games}) — Category ${player.category}`;
+    container.appendChild(div);
+  });
+}
+
 
 const allPlayers = [...teamA, ...teamB];
 const uniquePlayers = new Set(allPlayers);
