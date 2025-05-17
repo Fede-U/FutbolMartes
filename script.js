@@ -163,8 +163,12 @@ function populateTeamSelectors() {
     return container;
   };
 
-  ///Historial de partidos
-  function renderMatchHistory() {
+  teamA.appendChild(createSelects("teamA"));
+  teamB.appendChild(createSelects("teamB"));
+}
+
+// ✅ NOW these are outside, globally scoped:
+function renderMatchHistory() {
   const container = document.getElementById("history-container");
   container.innerHTML = "";
 
@@ -177,7 +181,6 @@ function populateTeamSelectors() {
     container.appendChild(div);
   });
 
-  // Attach event listeners
   document.querySelectorAll(".details-button").forEach(button => {
     button.addEventListener("click", function () {
       const matchIndex = this.dataset.index;
@@ -186,7 +189,7 @@ function populateTeamSelectors() {
   });
 }
 
-  function showMatchDetails(index) {
+function showMatchDetails(index) {
   const match = matches[index];
   const modal = document.getElementById("match-modal");
   const content = document.getElementById("modal-content");
@@ -210,11 +213,5 @@ window.addEventListener("click", (e) => {
     modal.classList.add("hidden");
   }
 });
-
-
-
-  teamA.appendChild(createSelects("teamA"));
-  teamB.appendChild(createSelects("teamB"));
-}
 
 loadData();
