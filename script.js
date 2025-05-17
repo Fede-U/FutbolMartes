@@ -1,6 +1,41 @@
 let players = {};
 let matches = [];
 
+function renderMatchHistory() {
+  const container = document.getElementById("history-container");
+  container.innerHTML = "";
+
+  matches.forEach((match, index) => {
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <strong>${match.date}</strong> — Winner: Team ${match.winner}
+      <button data-index="${index}" class="details-button">View Details</button>
+    `;
+    container.appendChild(div);
+  });
+
+  document.querySelectorAll(".details-button").forEach(button => {
+    button.addEventListener("click", function () {
+      const matchIndex = this.dataset.index;
+      showMatchDetails(matchIndex);
+    });
+  });
+}
+
+function showMatchDetails(index) {
+  const match = matches[index];
+  const modal = document.getElementById("match-modal");
+  const content = document.getElementById("modal-content");
+
+  content.innerHTML = `
+    <p><strong>Team A:</strong> ${match.teamA.join(", ")}</p>
+    <p><strong>Team B:</strong> ${match.teamB.join(", ")}</p>
+    <p><strong>Winner:</strong> Team ${match.winner}</p>
+  `;
+
+  modal.classList.remove("hidden");
+}
+
 function loadData() {
   const savedPlayers = localStorage.getItem("players");
   const savedMatches = localStorage.getItem("matches");
@@ -165,42 +200,6 @@ function populateTeamSelectors() {
 
   teamA.appendChild(createSelects("teamA"));
   teamB.appendChild(createSelects("teamB"));
-}
-
-// ✅ NOW these are outside, globally scoped:
-function renderMatchHistory() {
-  const container = document.getElementById("history-container");
-  container.innerHTML = "";
-
-  matches.forEach((match, index) => {
-    const div = document.createElement("div");
-    div.innerHTML = `
-      <strong>${match.date}</strong> — Winner: Team ${match.winner}
-      <button data-index="${index}" class="details-button">View Details</button>
-    `;
-    container.appendChild(div);
-  });
-
-  document.querySelectorAll(".details-button").forEach(button => {
-    button.addEventListener("click", function () {
-      const matchIndex = this.dataset.index;
-      showMatchDetails(matchIndex);
-    });
-  });
-}
-
-function showMatchDetails(index) {
-  const match = matches[index];
-  const modal = document.getElementById("match-modal");
-  const content = document.getElementById("modal-content");
-
-  content.innerHTML = `
-    <p><strong>Team A:</strong> ${match.teamA.join(", ")}</p>
-    <p><strong>Team B:</strong> ${match.teamB.join(", ")}</p>
-    <p><strong>Winner:</strong> Team ${match.winner}</p>
-  `;
-
-  modal.classList.remove("hidden");
 }
 
 document.querySelector(".close-button").addEventListener("click", () => {
