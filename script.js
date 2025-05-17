@@ -7,6 +7,7 @@ function renderMatchHistory() {
 
   matches.forEach((match, index) => {
     const div = document.createElement("div");
+    div.classList.add("timeline-item");
     div.innerHTML = `
       <strong>${match.date}</strong> — Winner: Team ${match.winner}
       <button data-index="${index}" class="details-button">View Details</button>
@@ -146,6 +147,7 @@ function renderPlayers() {
   for (const name in players) {
     const { wins, games, winPct, category } = getPlayerStats(name);
     const div = document.createElement("div");
+    div.classList.add("card");
     div.textContent = `${name} — ${wins}W / ${games}G (${winPct}%) — Category ${category}`;
     container.appendChild(div);
   }
@@ -163,6 +165,7 @@ function renderRankings() {
 
   ranked.forEach(player => {
     const div = document.createElement("div");
+    div.classList.add("card");
     div.textContent = `${player.name}: ${player.winPct}% (${player.wins}/${player.games}) — Category ${player.category}`;
     container.appendChild(div);
   });
