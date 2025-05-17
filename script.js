@@ -67,6 +67,7 @@ document.getElementById("matchInput").addEventListener("submit", function (e) {
   saveData();
   renderPlayers();
   renderRankings();
+  renderMatchHistory();
   document.getElementById("matchInput").reset();
   populateTeamSelectors();
 });
